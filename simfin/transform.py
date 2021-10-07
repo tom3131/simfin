@@ -218,6 +218,26 @@ def avg_ttm_3y(df):
     """
     return (1.0/3.0) * (df + df.shift(4) + df.shift(8))
 
+def avg_ttm_5y(df):
+    """
+    Calculate 5-year averages from TTM financial data, which has 4 data-points
+    per year, and each data-points covers the Trailing Twelve Months.
+
+    This is different from using a rolling average on TTM data, which
+    over-weighs the most recent quarters in the average.
+
+    This function should only be used on DataFrames for a single stock.
+    Use :obj:`~simfin.utils.apply` with this function on DataFrames for
+    multiple stocks.
+
+    :param df:
+        Pandas DataFrame with TTM financial data sorted ascendingly by date.
+
+    :return:
+        Pandas DataFrame with 5-year averages.
+    """
+    return (1.0/5.0) * (df + df.shift(4) + df.shift(8) +  df.shift(12)  +  df.shift(16))
+
 
 def avg_ttm(df, years):
     """
